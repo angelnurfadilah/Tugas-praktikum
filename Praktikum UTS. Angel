@@ -1,109 +1,76 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
-struct Jurusan {
-    string kode,nama;
-    int pembayaranAwal,jumlahCicilan,besarCicilan;
-};
+int main()
+{
+	string nMahasiswa[100], jMahasiswa[100], kMahasiswa[100];
+	int	npm[100], bayarAwal[100], bayarCicilan[100], besaran[100], uangKuliah[100], bayar[100], terbayar[100], sisaBayar[100], i = 0;
+	char entry = 'y';
+		
+	cout << setprecision(10);
 
-
-void tampilkanDataJurusan(Jurusan jurusan[], int jumlahJurusan) {	
-    cout << "Kode | Jurusan                | Pembayaran Awal | Jumlah Cicilan | Besar Cicilan\n";
-    cout << "--------------------------------------------------------------\n";
-    for (int i = 0; i < jumlahJurusan; i++) {
-        cout << jurusan[i].kode << "   | " 
-             << jurusan[i].nama << "  | " 
-             << jurusan[i].pembayaranAwal << "           | " 
-             << jurusan[i].jumlahCicilan << "          | " 
-             << jurusan[i].besarCicilan << "\n";
-    }
-}
-
-int main() {
-    Jurusan jurusan[] = {
-        {"SI", "Sistem Informasi", 2100000, 7, 300000},
-        {"TI", "Teknik Informatika", 2500000, 7, 300000},
-        {"KA", "Komputer Akutansi", 1750000, 6, 200000},
-        {"MI", "Manajemen Informatika", 1500000, 6, 2500000}
-    };
-
-    const int jumlahJurusan = sizeof(jurusan) / sizeof(jurusan[0]);
-    char lagi;
+	while(entry == 'Y' || entry == 'y')
+	{
+		cout << "--------------------------------------------\n";
+		cout << "Nama Mahasiswa" << ":"; cin >> nMahasiswa[i];
+		cout << "NPM" << ":"; cin >> npm[i];
+		cout << "Kode" << ":"; cin >> kMahasiswa[i];
+		
+		if(kMahasiswa[i] == "SI"){
+			jMahasiswa[i] = "Sistem Informasi";
+			bayarAwal[i] = 2100000;
+			bayarCicilan[i] = 7;
+			besaran[i] = 300000;
+			uangKuliah[i] = bayarAwal[i] + (bayarCicilan[i] * besaran[i]);
+		}else if(kMahasiswa[i] == "TI"){
+			jMahasiswa[i] = "Teknik Informatika";
+			bayarAwal[i] = 2500000;
+			bayarCicilan[i] = 7;
+			besaran[i] = 300000;
+			uangKuliah[i] = bayarAwal[i] + (bayarCicilan[i] * besaran[i]);
+		}else if(kMahasiswa[i] == "KA"){
+			jMahasiswa[i] = "Komputer Akuntansi";
+			bayarAwal[i] = 1750000;
+			bayarCicilan[i] = 6;
+			besaran[i] = 200000;
+			uangKuliah[i] = bayarAwal[i] + (bayarCicilan[i] * besaran[i]);
+		}else if(kMahasiswa[i] == "MI"){
+			jMahasiswa[i] = "Manajemen Informatika";
+			bayarAwal[i] = 1500000;
+			bayarCicilan[i] = 6;
+			besaran[i] = 250000;
+			uangKuliah[i] = bayarAwal[i] + (bayarCicilan[i] * besaran[i]);
+		}
+		
+		cout << "Jurusan" << ":" << jMahasiswa[i] << endl;
+		cout << "Pembayaran Awal" << ":" << bayarAwal[i] << endl;
+		cout << "Jumlah Cicilan" << ":" << bayarCicilan[i] << endl;
+		cout << "Besar Cicilan" << ":" << besaran[i] << endl;
+		
+		cout << "Pembayaran Ke" << ":"; cin >> bayar[i];
+		
+		if(bayar[i] <= bayarCicilan[i])
+		{
+			terbayar[i] = bayarAwal[i] + (bayar[i] * besaran[i]);
+			sisaBayar[i] = uangKuliah[i] - terbayar[i];
+		}
+		else
+		{
+			terbayar[i] = uangKuliah[i];
+			sisaBayar[i] = 0;
+		}
+		
+		cout << "Uang Kuliah" << ":" << uangKuliah[i] << endl;
+		cout << "Uang Kuliah Terbayar" << ":" << terbayar[i] << endl;
+		cout << "Sisa Uang Kuliah" << ":" << sisaBayar[i] << endl;
+		
+		cout << "Masih ingin menghitung [Y/T]" << ":"; cin >> entry;
+		
+		i++;
+	}
 	
-	cout << "+----------------------------------------------------------------+\n";
-	cout << "|      Pembayaran UKT Universitas USK      |\n";
-	cout << "+----------------------------------------------------------------+\n";
-	
-    do {
-        string namaMahasiswa, npm, kodeJurusan;
-        int pembayaranAwal, jumlahCicilan, besarCicilan;
-        
-        cout << "Nama Mahasiswa: ";
-        getline(cin, namaMahasiswa);
-        cout << "NPM: ";
-        getline(cin, npm);
-        cout << endl;
-
-        tampilkanDataJurusan(jurusan, jumlahJurusan);
-        
-        cout << endl;
-
-        cout << "Kode Jurusan: ";
-        cin >> kodeJurusan;
-
-        bool ditemukan = false;
-        string namaJurusan;
-        for (int i = 0; i < jumlahJurusan; i++) {
-            if (jurusan[i].kode == kodeJurusan) {
-                pembayaranAwal = jurusan[i].pembayaranAwal;
-                jumlahCicilan = jurusan[i].jumlahCicilan;
-                besarCicilan = jurusan[i].besarCicilan;
-                namaJurusan = jurusan[i].nama;  // Simpan nama jurusan
-                ditemukan = true;
-                break;
-            }
-        }
-
-        if (!ditemukan) {
-            cout << "Kode Jurusan tidak ditemukan!\n";
-            continue;
-        }
-
-        // Tampilkan nama jurusan
-        cout << "Jurusan: " << namaJurusan << endl;
-
-        // Hitung total uang kuliah
-        int uangKuliah = pembayaranAwal + (jumlahCicilan * besarCicilan);
-        cout << "Uang Kuliah: " << uangKuliah << endl;
-
-        // Hitung pembayaran terbayar
-        cout << "Masukkan Pembayaran Ke-i (1 s/d " << jumlahCicilan << "): ";
-        int pembayaranKe;
-        cin >> pembayaranKe;
-
-        if (pembayaranKe < 1 || pembayaranKe > jumlahCicilan) {
-            cout << "Pembayaran Ke-i tidak valid!\n";
-            continue;
-        }
-
-        int uangKuliahTerbayar = pembayaranAwal + ((pembayaranKe - 1) * besarCicilan);
-        cout << "Uang Kuliah Terbayar setelah " << pembayaranKe << " kali cicilan: " << uangKuliahTerbayar << endl;
-
-        // Hitung sisa uang kuliah
-        int sisaUangKuliah = uangKuliah - uangKuliahTerbayar;
-        cout << "Sisa Uang Kuliah: " << sisaUangKuliah << endl;
-
-        cout << "Masih ingin menghitung? (Y/N): ";
-        cin >> lagi;
-        cin.ignore();
-        
-        cout << "+----------------------------------------------------------------+\n";
-        
-        cout << endl;
-
-    } while (lagi == 'Y' || lagi == 'y');
-
-    return 0;
+	return 0;
 }
